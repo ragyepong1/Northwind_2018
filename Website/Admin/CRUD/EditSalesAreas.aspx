@@ -1,0 +1,152 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="EditSalesAreas.aspx.cs" Inherits="Admin_CRUD_EditSalesAreas" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="Server">
+    <div class="jumbotron">
+        <h1>Sales Management Areas</h1>
+        <p class="lead">Northwind Trader's employees are assigned to various sales areas, comprised of regions and territories. The initial set of areas focus on the continental US. This page provides <a href="#" data-placement="top" data-toggle="tooltip" title="Read, Edit, Add, Delete -- Cleaner than CRUD">R.E.A.D.</a> management of these areas.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <asp:Label ID="MessageLabel" runat="server" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Regions</h1>
+            <asp:ListView ID="RegionListView" runat="server" DataSourceID="RegionDataSource" InsertItemPosition="LastItem" DataKeyNames="RegionID">
+        <AlternatingItemTemplate>
+            <tr style="">
+                <td>
+                    <asp:Button runat="server" CommandName="Delete" Text="Delete" ID="DeleteButton" />
+                    <asp:Button runat="server" CommandName="Edit" Text="Edit" ID="EditButton" />
+                </td>
+                <td>
+                    <asp:Label Text='<%# Eval("RegionID") %>' runat="server" ID="RegionIDLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("RegionDescription") %>' runat="server" ID="RegionDescriptionLabel" /></td>
+                <%--<td>
+                    <asp:Label Text='<%# Eval("Territories") %>' runat="server" ID="TerritoriesLabel" /></td>--%>
+            </tr>
+        </AlternatingItemTemplate>
+        <EditItemTemplate>
+            <tr style="">
+                <td>
+                    <asp:Button runat="server" CommandName="Update" Text="Update" ID="UpdateButton" />
+                    <asp:Button runat="server" CommandName="Cancel" Text="Cancel" ID="CancelButton" />
+                </td>
+                <td>
+                    <asp:TextBox Text='<%# Bind("RegionID") %>' runat="server" ID="RegionIDTextBox" /></td>
+                <td>
+                    <asp:TextBox Text='<%# Bind("RegionDescription") %>' runat="server" ID="RegionDescriptionTextBox" /></td>
+                <%--<td>
+                    <asp:TextBox Text='<%# Bind("Territories") %>' runat="server" ID="TerritoriesTextBox" /></td>--%>
+            </tr>
+        </EditItemTemplate>
+        <EmptyDataTemplate>
+            <table runat="server" style="">
+                <tr>
+                    <td>No data was returned.</td>
+                </tr>
+            </table>
+        </EmptyDataTemplate>
+        <InsertItemTemplate>
+            <tr style="">
+                <td>
+                    <asp:Button runat="server" CommandName="Insert" Text="Insert" ID="InsertButton" />
+                    <asp:Button runat="server" CommandName="Cancel" Text="Clear" ID="CancelButton" />
+                </td>
+                <td>
+                    <asp:TextBox Text='<%# Bind("RegionID") %>' runat="server" ID="RegionIDTextBox" /></td>
+                <td>
+                    <asp:TextBox Text='<%# Bind("RegionDescription") %>' runat="server" ID="RegionDescriptionTextBox" /></td>
+                <%--<td>
+                    <asp:TextBox Text='<%# Bind("Territories") %>' runat="server" ID="TerritoriesTextBox" /></td>--%>
+            </tr>
+        </InsertItemTemplate>
+        <ItemTemplate>
+            <tr style="">
+                <td>
+                    <asp:Button runat="server" CommandName="Delete" Text="Delete" ID="DeleteButton" />
+                    <asp:Button runat="server" CommandName="Edit" Text="Edit" ID="EditButton" />
+                </td>
+                <td>
+                    <asp:Label Text='<%# Eval("RegionID") %>' runat="server" ID="RegionIDLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("RegionDescription") %>' runat="server" ID="RegionDescriptionLabel" /></td>
+                <%--<td>
+                    <asp:Label Text='<%# Eval("Territories") %>' runat="server" ID="TerritoriesLabel" /></td>--%>
+            </tr>
+        </ItemTemplate>
+        <LayoutTemplate>
+            <table runat="server">
+                <tr runat="server">
+                    <td runat="server">
+                        <table runat="server" id="itemPlaceholderContainer" style="" border="0">
+                            <tr runat="server" style="">
+                                <th runat="server"></th>
+                                <th runat="server">RegionID</th>
+                                <th runat="server">RegionDescription</th>
+                                <%--<th runat="server">Territories</th>--%>
+                            </tr>
+                            <tr runat="server" id="itemPlaceholder"></tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr runat="server">
+                    <td runat="server" style="">
+                        <asp:DataPager runat="server" ID="DataPager1">
+                            <Fields>
+                                <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False"></asp:NextPreviousPagerField>
+                                <asp:NumericPagerField></asp:NumericPagerField>
+                                <asp:NextPreviousPagerField ButtonType="Button" ShowLastPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False"></asp:NextPreviousPagerField>
+                            </Fields>
+                        </asp:DataPager>
+                    </td>
+                </tr>
+            </table>
+        </LayoutTemplate>
+        <SelectedItemTemplate>
+            <tr style="">
+                <td>
+                    <asp:Button runat="server" CommandName="Delete" Text="Delete" ID="DeleteButton" />
+                    <asp:Button runat="server" CommandName="Edit" Text="Edit" ID="EditButton" />
+                </td>
+                <td>
+                    <asp:Label Text='<%# Eval("RegionID") %>' runat="server" ID="RegionIDLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("RegionDescription") %>' runat="server" ID="RegionDescriptionLabel" /></td>
+                <%--<td>
+                    <asp:Label Text='<%# Eval("Territories") %>' runat="server" ID="TerritoriesLabel" /></td>--%>
+            </tr>
+        </SelectedItemTemplate>
+    </asp:ListView>
+    <asp:ObjectDataSource runat="server" ID="RegionDataSource" OldValuesParameterFormatString="original_{0}" SelectMethod="ListAllRegions" TypeName="NorthwindTraders.BLL.CRUD.RegionController" DataObjectTypeName="NorthwindTraders.Entities.Region" DeleteMethod="DeleteRegion" InsertMethod="AddRegion" UpdateMethod="UpdateRegion" OnDeleted="CheckForException" OnInserted="CheckForException" OnUpdated="CheckForException"></asp:ObjectDataSource>
+</div>
+        <div class="col-md-6">
+            <h1>Territories</h1>
+            <asp:ListView ID="TerritoryListView" runat="server" DataSourceID="TerritoryDataSource" DataKeyNames="TerritoryID" ItemType="NorthwindTraders.Entities.Territory" InsertItemPosition="LastItem">
+                <LayoutTemplate>
+                    <div id="itemPlaceholderContainer" runat="server">
+                        <div id="itemPlaceholder" runat="server"></div>
+                    </div>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <div>
+                        <asp:Label ID="TerritoryDescriptionLabel" runat="server" Text='<%# Item.TerritoryDescription + " (" + Item.Region.RegionDescription + ") " %>' />
+                    </div>
+                </ItemTemplate>
+                <InsertItemTemplate></InsertItemTemplate>
+            </asp:ListView>
+            <asp:ObjectDataSource runat="server" ID="TerritoryDataSource" DataObjectTypeName="NorthwindTraders.Entities.Territory" DeleteMethod="DeleteTerritory" InsertMethod="AddTerritory" OldValuesParameterFormatString="original_{0}" SelectMethod="ListAllTerritories" TypeName="NorthwindTraders.BLL.CRUD.TerritoryController" UpdateMethod="UpdateTerritory"></asp:ObjectDataSource>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</asp:Content>
+
