@@ -2,6 +2,7 @@
 <%@ Import Namespace="Website" %>
 <%@ Import Namespace="System.Web.Optimization" %>
 <%@ Import Namespace="System.Web.Routing" %>
+<%@ Import Namespace="NorthwindTraders.Security.BLL" %>
 
 <script runat="server">
 
@@ -9,6 +10,15 @@
     {
         RouteConfig.RegisterRoutes(RouteTable.Routes);
         BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+        // Setup default security roles
+        var roleManager = new RoleManager();
+        roleManager.AddStartupRoles();
+
+        // Add a WebMaster account
+
+        var userManager = new UserManager();
+        userManager.AddWebMaster();
     }
 
 </script>

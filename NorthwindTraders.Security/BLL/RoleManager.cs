@@ -1,0 +1,45 @@
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Website;
+
+namespace NorthwindTraders.Security.BLL
+{
+    [DataObject]
+    public class RoleManager : RoleManager<IdentityRole>
+    {
+        public RoleManager() : base(new RoleStore<IdentityRole>(new ApplicationDbContext()))
+        {
+
+        }
+
+        public void AddStartupRoles()
+        {
+            // Security roles that will be added on startup
+            var startupRoles = new string[] { "Administrators", "Employees", "Customers" };
+            foreach(var roleName in startupRoles)
+            {
+                // Check if it exists
+                if(!Roles.Any(r => r.Name.Equals(roleName)))
+                {
+                    this.Create(new IdentityRole(roleName));
+                }
+            }
+        }
+
+        #region Standard CRUD Methods
+            [DataObjectMethod(DataObjectMethodType.Select)]
+            public List<string> ListAllSecurityRoles()
+            {
+            var results = from role in Roles.ToList()
+                          select role.Name;
+            return results.ToList();
+            }
+        #endregion
+    }
+}
