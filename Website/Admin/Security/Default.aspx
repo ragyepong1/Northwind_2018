@@ -29,12 +29,17 @@
                                 <div class="col-sm-3">TODO</div>
                                 <div class="col-sm-3">
                                     <%# Item.UserName %>
+                                    <br />
+                                    <%# Item.FullName %>
                                 </div>
                                 <div class="col-sm-6">
                                     Email: <%# Item.EmailService %>
                                     <asp:CheckBox ID="IsConfirmed" runat="server" Enabled="false" Checked="<%# Item.EmailConfirmed %>" Text="Confirmed" />
                                     <br />
                                     <%# Item.EmployeeId.HasValue ? "Employee" : !string.IsNullOrEmpty(Item.CustomerId) ? "Customer" : "-unassigned-" %>
+                                    <br />
+                                    <label>Security Roles: </label>
+                                    <%# string.Join(", ", Item.RoleMemberships) %>
                                 </div>
                             </div>
                         </ItemTemplate>
@@ -44,7 +49,7 @@
 
                 <div id="roles" class="tab-pane fade in">
                     <blockquote>Security Roles for the Site</blockquote>
-                    <asp:ListView ID="SecurityRolesListView" runat="server" DataSourceID="RolesDataSource" ItemType="NorthwindTraders.Security.BLL.RoleManager">
+                    <%--<asp:ListView ID="SecurityRolesListView" runat="server" DataSourceID="RolesDataSource" ItemType="NorthwindTraders.Security.BLL.RoleManager">
                         <LayoutTemplate>
                             <div class="row bg-info">
                                 <div class="col-sm-12 h4">Roles</div>
@@ -59,7 +64,7 @@
                             </div>
                         </ItemTemplate>
                     </asp:ListView>
-                    <asp:ObjectDataSource runat="server" ID="RolesDataSource" OldValuesParameterFormatString="original_{0}" SelectMethod="ListAllSecurityRoles" TypeName="NorthwindTraders.Security.BLL.RoleManager"></asp:ObjectDataSource>
+                    <asp:ObjectDataSource runat="server" ID="RolesDataSource" OldValuesParameterFormatString="original_{0}" SelectMethod="ListAllSecurityRoles" TypeName="NorthwindTraders.Security.BLL.RoleManager"></asp:ObjectDataSource>--%>
                 </div>
 
                 <div id="unregistered" class="tab-pane fade in">

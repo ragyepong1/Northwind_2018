@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NorthwindTraders.DAL
 {
-    public class NorthwindContext : DbContext
+    internal class NorthwindContext : DbContext
     {
         public NorthwindContext() : base("name=NW2018") // name of the <connectionString><add name="" ...
         {
