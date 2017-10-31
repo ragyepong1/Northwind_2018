@@ -15,18 +15,6 @@ public partial class Admin_CRUD_EditSalesAreas : System.Web.UI.Page
 
     protected void CheckForException(object sender, ObjectDataSourceStatusEventArgs e)
     {
-        // Here is where I can inspect the event t see if an exception has occurred
-        if(e.Exception is DbEntityValidationException)
-        {
-            var ex = e.Exception as DbEntityValidationException;
-            var details = from DbValidationError error
-                          in ex.EntityValidationErrors.First().ValidationErrors
-                          select error.ErrorMessage;
-            MessageLabel.Text = "The following validation errors occurred: "
-                                    + "<blockquote><ul>";
-            foreach (string problem in details)
-                MessageLabel.Text += $"<li>{problem}</li>";
-            MessageLabel.Text += "<ul><blockquote>";
-        }
+        MessageUserControl.HandleDataBoundException(e);
     }
 }
