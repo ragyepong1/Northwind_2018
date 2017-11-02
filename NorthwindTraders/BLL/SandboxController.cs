@@ -14,7 +14,6 @@ namespace NorthwindTraders.BLL
     public class SandboxController
     {
         // TODO: ) Discontinued products
-
         [DataObjectMethod(DataObjectMethodType.Select)]
         public List<Product> DiscontinuedProducts()
         {
@@ -28,107 +27,100 @@ namespace NorthwindTraders.BLL
         }
 
         // TODO: ) Understocked products (UnitsInStock < ReorderLevel)
-
         [DataObjectMethod(DataObjectMethodType.Select)]
         public List<Product> UnderstockedProducts()
         {
             using (var context = new NorthwindContext())
             {
-                var results = from data in context.Products
-                              where data.UnitsInStock < data.ReorderLevel
-                              select data;
+                var results = from item in context.Products
+                              where item.UnitsInStock < item.ReorderLevel
+                              select item;
                 return results.ToList();
             }
         }
 
-        // TODO: ) Recommended product re-orders (UnitsInStock + UnitsOnOrder > ReorderLevel)
-
-        [DataObjectMethod(DataObjectMethodType.Select)]
-        public List<Product> RecommendedReorders()
-        {
-            using (var context = new NorthwindContext())
-            {
-                var results = from data in context.Products
-                              where (data.UnitsInStock + data.UnitsOnOrder) < data.ReorderLevel
-                              select data;
-                return results.ToList();
-            }
-        }
-
-        // TODO: ) Create a method called Clearance items that returns a list of all the products where the product is disconmtinued and we have items in stock
-
+        // TODO: ) Create a method called ClearanceItems that returns a list of all products
+        //         where the product is discontinued and we have items in-stock.
         [DataObjectMethod(DataObjectMethodType.Select)]
         public List<Product> ClearanceItems()
         {
             using (var context = new NorthwindContext())
             {
-                var results = from data in context.Products
-                              where data.UnitsInStock > 0 && data.Discontinued
-                              select data;
+                var results = from item in context.Products
+                              where item.Discontinued && item.UnitsInStock > 0
+                              select item;
                 return results.ToList();
             }
         }
 
-        // TODO: ) Shippers and the number of orders they have handled
 
+        // TODO: ) Recommended product re-orders (UnitsInStock + UnitsOnOrder < ReorderLevel)
+
+        // TODO: ) Shippers and the number of orders they have handled
         [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ShipperInfo> ShipperSummary()
         {
             using (var context = new NorthwindContext())
             {
-                var results = from data in context.Shippers
+                var results = from row in context.Shippers
                               select new ShipperInfo()
                               {
-                                  Company = data.CompanyName,
-                                  OrdersToDate = data.Orders.Count()
+                                  Company = row.CompanyName,
+                                  OrdersToDate = row.Orders.Count()
                               };
                 return results.ToList();
             }
         }
-
-        public class ShipperInfo
+        // Q'n'D
+        public class ShipperInfo // a simple DTO
         {
-            public string Company { get; internal set; }
-            public int OrdersToDate { get; internal set; }
+            public string Company { get; set; }
+            public int OrdersToDate { get; set; }
         }
-
         // TODO: 1) Customer Order History
         //          (dates, ship-to, freight, total cost, with order detail summary and employee rep)
-
         [DataObjectMethod(DataObjectMethodType.Select)]
         public List<CustomerOrderHistory> ListAllCustomerOrders()
         {
             using (var context = new NorthwindContext())
             {
-                var results = from data in context.Orders
+                var results = from row in context.Orders
                               select new CustomerOrderHistory()
                               {
-                                  Company = data.Customer.CompanyName,
-                                  OrdersDate = data.OrderDate,
-                                  FreightCharge = data.Freight,
-                                  TotalCost = (from item in data.OrderDetails
+                                  Company = row.Customer.CompanyName,
+                                  OrderDate = row.OrderDate,
+                                  FreightCharge = row.Freight,
+                                  TotalCost = (from item in row.OrderDetails
                                                select item.Quantity * item.UnitPrice).Sum(),
-                                  OrderItems = (from item in data.OrderDetails
-                                                select new OrderDetailSummary() {
+                                  OrderItems = (from item in row.OrderDetails
+                                                select new OrderDetailSummary()
+                                                {
                                                     Product = item.Product.ProductName,
                                                     Quantity = item.Quantity,
                                                     UnitPrice = item.UnitPrice,
                                                     Unit = item.Product.QuantityPerUnit
                                                 }).ToList()
-                                            
                               };
                 return results.ToList();
             }
         }
+        /// <summary>
+        /// CustomerOrderHistory is a Data-Transfer-Object
+        /// representing generalized customer order information
+        /// </summary>
         public class CustomerOrderHistory
         {
             public string Company { get; internal set; }
             public decimal? FreightCharge { get; internal set; }
-            public DateTime? OrdersDate { get; internal set; }
+            public DateTime? OrderDate { get; internal set; }
             public decimal TotalCost { get; internal set; }
             public List<OrderDetailSummary> OrderItems { get; internal set; }
         }
-
+        /// <summary>
+        /// OrderDetailSummary is a POCO with
+        /// simple info of the detail items
+        /// in a customer order.
+        /// </summary>
         public class OrderDetailSummary
         {
             public string Product { get; internal set; }
@@ -136,16 +128,14 @@ namespace NorthwindTraders.BLL
             public string Unit { get; internal set; }
             public decimal UnitPrice { get; internal set; }
         }
-
-
         // TODO: 2) Employee Bio
-
         [DataObjectMethod(DataObjectMethodType.Select)]
         public List<Bio> EmployeeBios()
         {
             using (var context = new NorthwindContext())
             {
                 var results = from person in context.Employees
+                                  //foreach(var person in Employees)
                               select new Bio
                               {
                                   FullName = person.FirstName + " " + person.LastName,
@@ -153,7 +143,8 @@ namespace NorthwindTraders.BLL
                                   CompanyPhoneExtension = person.Extension,
                                   Photo = person.Photo,
                                   MimeType = person.PhotoMimeType,
-                                  Supervisor = person.Manager.FirstName + " " + person.Manager.LastName,
+                                  Supervisor = person.Manager.FirstName + " "
+                                             + person.Manager.LastName, // TODO: Change for Visual Studio
                                   Notes = person.Notes
                               };
                 return results.ToList();
@@ -162,11 +153,11 @@ namespace NorthwindTraders.BLL
 
         public class Bio
         {
+            public string Notes { get; internal set; }
             public string CompanyPhoneExtension { get; internal set; }
             public string FullName { get; internal set; }
             public string JobTitle { get; internal set; }
             public string MimeType { get; internal set; }
-            public string Notes { get; internal set; }
             public byte[] Photo { get; internal set; }
             public string Supervisor { get; internal set; }
         }

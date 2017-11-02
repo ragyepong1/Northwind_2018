@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity; // for RoleManager<T>
+using Microsoft.AspNet.Identity.EntityFramework; // for IdentityRole
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,21 +7,21 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Website;
+using Website; // for ApplicationDbContext
 
 namespace NorthwindTraders.Security.BLL
 {
     [DataObject]
     public class RoleManager : RoleManager<IdentityRole>
     {
-        public RoleManager() : base(new RoleStore<IdentityRole>(new ApplicationDbContext()))
+        public RoleManager()
+            : base(new RoleStore<IdentityRole>(new ApplicationDbContext()))
         {
-
         }
 
         public void AddStartupRoles()
         {
-            // Security roles that will be added on startup
+            // Security roles that will added on startup
             var startupRoles = ConfigurationManager.AppSettings["startupRoles"].Split(';');
             foreach(var roleName in startupRoles)
             {
@@ -34,13 +34,14 @@ namespace NorthwindTraders.Security.BLL
         }
 
         #region Standard CRUD Methods
-            [DataObjectMethod(DataObjectMethodType.Select)]
-            public List<string> ListAllSecurityRoles()
-            {
+        [DataObjectMethod(DataObjectMethodType.Select)]
+        public List<string> ListAllSecurityRoles()
+        {
             var results = from role in Roles.ToList()
                           select role.Name;
             return results.ToList();
-            }
+                      
+        }
         #endregion
     }
 }

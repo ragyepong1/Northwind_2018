@@ -2,30 +2,38 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
     <h1 class="page-header">Product Catalog</h1>
-
     <div class="row">
         <div class="col-md-12">
-            <asp:Repeater ID="CategoryRepeater" runat="server"
-                 ItemType="NorthwindData.App.DTOs.ProductCategory">
+            <asp:Repeater ID="CategoryRepeater" runat="server" DataSourceID="CatalogDataSource" ItemType="NorthwindTraders.Entities.DTOs.ProductCategory" >
                 <ItemTemplate>
-                    <img src="data:image/png,<%# Convert.ToBase64String(Item.Picture) %>" />
-                    <h4><%# Item.Name %></h4>
-                    <blockquote>
-                        <asp:Repeater ID="ProductRepeater" runat="server"
-                             ItemType="NorthwindData.App.DTOs.ProductInfo"
-                             DataSource="<%# Item.Products %>">
-                            <ItemTemplate>
-                                
-                                <p><b><%# Item.Name %></b>
-                                    <!-- Format the price using string interpolation -->
-                                   <%# $"{Item.Price:C}" %> <%# Item.QuantityPerUnit %>
-                                   &mdash; <%# Item.InStock %> In stock </p>
-                            </ItemTemplate>
-                        </asp:Repeater>
-                    </blockquote>
+                    <div>
+                        <img  src="data:image/png;base64,<%# Convert.ToBase64String(Item.Picture) %>" />
+                        <h3><%# Item.Name %></h3>
+                        <p><%# Item.Description %></p>
+                        <blockquote>
+                            <asp:Repeater ID="ProductRepeater" runat="server" DataSource="<%# Item.Products %>" ItemType="NorthwindTraders.Entities.POCOs.ProductInfo">
+                                <HeaderTemplate>
+                                    <table class="table table-hover table-condensed">
+                                </HeaderTemplate>
+                                <FooterTemplate>
+                                    </table>
+                                </FooterTemplate>
+                                <ItemTemplate>
+                                    <tr>
+                                        <th><%# Item.Name %></th>
+                                        <td><%# $"{Item.Price:C}" %></td>
+                                        <td><%# Item.QuantityPerUnit %></td>
+                                        <td><%# Item.InStock %></td>
+                                    </tr>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </blockquote>
+                    </div>
                 </ItemTemplate>
             </asp:Repeater>
         </div>
     </div>
+    <asp:ObjectDataSource ID="CatalogDataSource" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="AllProductsByCategory" TypeName="NorthwindTraders.BLL.ProductCategoryController"></asp:ObjectDataSource>
+
 </asp:Content>
 

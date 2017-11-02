@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="BLL\RoleManager.cs" />
     <Compile Include="BLL\UserManager.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
     <Compile Include="Entities\UserProfile.cs" />
@@ -71,7 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NorthwindTraders\NorthwindTraders.csproj">
-      <Project>{0E57438D-6E17-4777-BDB5-198C08167B4A}</Project>
+      <Project>{0e57438d-6e17-4777-bdb5-198c08167b4a}</Project>
       <Name>NorthwindTraders</Name>
     </ProjectReference>
   </ItemGroup>

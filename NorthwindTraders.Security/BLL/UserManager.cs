@@ -3,15 +3,12 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using NorthwindTraders.DAL;
 using NorthwindTraders.Security.BLL;
 using NorthwindTraders.Security.Entities; // UserProfile
-using System;
 using System.Collections.Generic; // List<T>
 using System.ComponentModel; // [DataObject] et.al.
 using System.Configuration;
-using System.Linq; // for various Entension methods
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq; // for various Extension methods for collections, such as .ToList()
 
-namespace Website
+namespace Website // TODO: rename namespace NorthwindTraders.Security.BLL
 {
     [DataObject]
     public class UserManager : UserManager<ApplicationUser>
@@ -21,7 +18,7 @@ namespace Website
         {
         }
 
-        public void AddWebMaster()
+        public void AddWewbMaster()
         {
             // Add a web master user, if one doesn't exist
             string username = ConfigurationManager.AppSettings["adminUserName"];
@@ -30,7 +27,7 @@ namespace Website
                 var webMasterAccount = new ApplicationUser()
                 {
                     UserName = username,
-                    Email = ConfigurationManager.AppSettings["adminEmail"], // nice happenstance
+                    Email = ConfigurationManager.AppSettings["adminEmail"],
                     EmailConfirmed = true
                 };
                 this.Create(webMasterAccount, ConfigurationManager.AppSettings["adminPassword"]);
@@ -40,22 +37,24 @@ namespace Website
         }
 
         #region Standard CRUD Operations for Users
-            [DataObjectMethod(DataObjectMethodType.Select)]
-            public List<UserProfile> ListAllUsers()
-            {
+        [DataObjectMethod(DataObjectMethodType.Select)]
+        public List<UserProfile> ListAllUsers()
+        {
             var rm = new RoleManager();
-            // The UserManager for ASP.NET Identity has a built-in property for all users
+            // The UserManager for ASP.Net Identity has a built-in property for all users
             var result = from person in Users.ToList()
                          select new UserProfile
                          {
                              UserId = person.Id,
                              UserName = person.UserName,
-                             EmailService = person.Email,
+                             Email = person.Email,
                              EmailConfirmed = person.EmailConfirmed,
                              CustomerId = person.CustomerId,
                              EmployeeId = person.EmployeeId,
-                             RoleMemberships = person.Roles.Select(r => rm.FindById(r.RoleId).Name )
+                             RoleMemberships = person.Roles.Select(r => rm.FindById(r.RoleId).Name)
                          };
+
+            // Get any name info on the users
             using (var context = new NorthwindContext())
             {
                 foreach (var person in result)
@@ -63,16 +62,10 @@ namespace Website
                         person.FullName = context.Employees.Find(person.EmployeeId).FirstName + " " + context.Employees.Find(person.EmployeeId).LastName;
                     else if (!string.IsNullOrEmpty(person.CustomerId))
                         person.FullName = context.Customers.Find(person.CustomerId).ContactName;
-            }   
-            return result.ToList();
             }
+
+            return result.ToList();
+        }
         #endregion
     }
 }
-
-//namespace NorthwindTraders.Security.BLL
-//{
-//    class UserManager
-//    {
-//    }
-//}
