@@ -6,22 +6,22 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>3.28125in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.46875in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.11458in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.83333in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.51042in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -145,7 +145,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>In Stock Quantity</Value>
+                              <Value>In Stock </Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -181,7 +181,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>On Order Quantity</Value>
+                              <Value>On Order </Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -217,7 +217,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Reorder Level</Value>
+                              <Value>ROL</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -294,6 +294,7 @@
                               <Value>=Fields!UnitPrice.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <Format>'$'#,0.00;('$'#,0.00)</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -311,6 +312,7 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>en-US</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -1110,7 +1112,7 @@
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>1in</Size>
+                <Size>2.75in</Size>
                 <CellContents>
                   <Textbox Name="Textbox15">
                     <CanGrow>true</CanGrow>
@@ -1204,10 +1206,13 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1in</Size>
+                <Size>2.75in</Size>
                 <CellContents>
                   <Textbox Name="Supplier">
                     <CanGrow>true</CanGrow>
+                    <ToggleImage>
+                      <InitialState>true</InitialState>
+                    </ToggleImage>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
@@ -1256,6 +1261,9 @@
                     <CellContents>
                       <Textbox Name="Category">
                         <CanGrow>true</CanGrow>
+                        <ToggleImage>
+                          <InitialState>true</InitialState>
+                        </ToggleImage>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
@@ -1291,7 +1299,6 @@
                     <TablixMember>
                       <Group Name="Details" />
                       <Visibility>
-                        <Hidden>true</Hidden>
                         <ToggleItem>Category</ToggleItem>
                       </Visibility>
                     </TablixMember>
@@ -1300,7 +1307,6 @@
                     </TablixMember>
                   </TablixMembers>
                   <Visibility>
-                    <Hidden>true</Hidden>
                     <ToggleItem>Supplier</ToggleItem>
                   </Visibility>
                 </TablixMember>
@@ -1347,7 +1353,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>1in</Size>
+                <Size>2.75in</Size>
                 <CellContents>
                   <Textbox Name="Textbox17">
                     <CanGrow>true</CanGrow>
@@ -1428,7 +1434,7 @@
         </TablixRowHierarchy>
         <DataSetName>InventoryStatusDataSet</DataSetName>
         <Height>1.25in</Height>
-        <Width>8in</Width>
+        <Width>11.95833in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1436,11 +1442,97 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>2in</Height>
+    <Height>1.375in</Height>
     <Style />
   </Body>
-  <Width>8in</Width>
+  <Width>11.95833in</Width>
   <Page>
+    <PageHeader>
+      <Height>0.4675in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="Textbox1">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>= "Current Inventory Status"</Value>
+                  <Style>
+                    <FontSize>24pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox1</rd:DefaultName>
+          <Height>0.38764in</Height>
+          <Width>7.03125in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox4">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=FormatDateTime(Today(), DateFormat.LongDate)</Value>
+                  <Style>
+                    <FontSize>20pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox4</rd:DefaultName>
+          <Left>8.03125in</Left>
+          <Height>0.38764in</Height>
+          <Width>3.92708in</Width>
+          <ZIndex>1</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageHeader>
+    <PageFooter>
+      <Height>0.52083in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageFooter>
+    <PageHeight>8.5in</PageHeight>
+    <PageWidth>11in</PageWidth>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>
     <TopMargin>1in</TopMargin>
