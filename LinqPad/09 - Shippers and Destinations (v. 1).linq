@@ -1,6 +1,6 @@
 <Query Kind="Expression">
   <Connection>
-    <ID>613f289d-4e6f-494f-8138-720948994a90</ID>
+    <ID>a7b38f44-278c-490b-9f25-1e0c71246a63</ID>
     <Persist>true</Persist>
     <Server>.</Server>
     <Database>Northwind_DMIT2018</Database>
@@ -14,6 +14,5 @@ select new
     Shipper = row.CompanyName,
     Countries = from order in row.ShipViaOrders
                 orderby order.ShipCountry
-				group order by order.ShipCountry into countries
-                select countries.Key
+                select order.ShipCountry
 }

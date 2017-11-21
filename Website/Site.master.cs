@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Web;
@@ -66,9 +67,9 @@ public partial class SiteMaster : MasterPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!Request.IsAuthenticated)
+        if(!Request.IsAuthenticated)
         {
-            // Hide all the links that the user should not see
+            // Hide all the "links" that the user should not see
             Menu_UsersAndRoles.Visible = false;
         }
     }

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EB8A6898-10A8-403A-965D-6DBEC16807AB}</ProjectGuid>
+    <ProjectGuid>{940A4E38-47C9-4B09-B5FC-437CF95459F2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NorthwindTraders.Security</RootNamespace>
@@ -63,6 +63,9 @@
     <Compile Include="Class1.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
+    <Compile Include="Entities\RoleProfile.cs" />
+    <Compile Include="Entities\UnregisteredUser.cs" />
+    <Compile Include="Entities\UnregisteredUserType.cs" />
     <Compile Include="Entities\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
