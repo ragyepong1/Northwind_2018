@@ -1,0 +1,10 @@
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders\bin\Debug\NorthwindTraders.dll.config
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders\bin\Debug\NorthwindTraders.dll
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders\bin\Debug\NorthwindTraders.pdb
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders\bin\Debug\EntityFramework.dll
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders\bin\Debug\EntityFramework.xml
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders\obj\Debug\NorthwindTraders.csprojResolveAssemblyReference.cache
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders\obj\Debug\NorthwindTraders.dll
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders\obj\Debug\NorthwindTraders.pdb

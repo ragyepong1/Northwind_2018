@@ -1,0 +1,16 @@
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders.Security\obj\Debug\NorthwindTraders.Security.csprojResolveAssemblyReference.cache
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders.Security\bin\Debug\NorthwindTraders.Security.dll.config
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders.Security\bin\Debug\NorthwindTraders.Security.dll
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders.Security\bin\Debug\NorthwindTraders.Security.pdb
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders.Security\bin\Debug\EntityFramework.dll
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders.Security\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders.Security\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders.Security\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders.Security\bin\Debug\EntityFramework.xml
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders.Security\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders.Security\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders.Security\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders.Security\obj\Debug\NorthwindTraders.Security.dll
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders.Security\obj\Debug\NorthwindTraders.Security.pdb
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders.Security\bin\Debug\NorthwindTraders.dll
+C:\Users\ragyepong1\Documents\GitHub\Northwind_2018\NorthwindTraders.Security\bin\Debug\NorthwindTraders.pdb
