@@ -1,4 +1,5 @@
 ﻿using NorthwindTraders.DAL;
+using NorthwindTraders.Entities;
 using NorthwindTraders.Entities.DTOs;
 using NorthwindTraders.Entities.POCOs;
 using System;
@@ -7,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace NorthwindTraders.BLL
 {
@@ -65,18 +67,24 @@ namespace NorthwindTraders.BLL
             {
                 var shipped = "shipped".Equals(filter.ToLower());
 
-                var results = from data in context.Orders
+                // Added .ToList()because the .Sum() below
+                // won't work on null values in SQL, but works in-memory
+                var results = from data in context.Orders.ToList()
                               where data.CustomerID == customerId
                                  && data.ShippedDate.HasValue == shipped
                               select new CustomerOrder
                               {
                                   OrderId = data.OrderID,
-                                  Employee = data.Employee.FirstName + " " + data.Employee.LastName,
+                                  Employee = data.Employee.FirstName 
+                                           + " "
+                                           + data.Employee.LastName,
                                   OrderDate = data.OrderDate,
                                   RequiredDate = data.RequiredDate,
                                   ShippedDate = data.ShippedDate,
                                   Freight = data.Freight,
-                                  Shipper = data.Shipper.CompanyName,
+                                  Shipper = data.ShipVia.HasValue
+                                          ? data.Shipper.CompanyName
+                                          : null,
                                   OrderTotal = data.OrderDetails.Sum(x => x.Quantity * x.UnitPrice)
                               };
                 return results.ToList();
@@ -115,6 +123,7 @@ namespace NorthwindTraders.BLL
         #endregion
 
         #region Methods for Manual UI Processing
+        #region Query Responsibility
         public CustomerSummary GetCustomerSummary(string customerId)
         {
             using (var context = new NorthwindContext())
@@ -154,7 +163,10 @@ namespace NorthwindTraders.BLL
         {
             using (var context = new NorthwindContext())
             {
-                var result = (from data in context.Orders
+                // Added .ToList()because the .Sum() below
+                // won't work on null values in SQL, but works in-memory
+
+                var result = (from data in context.Orders.ToList()
                               where data.OrderID == orderId
                               select new CustomerOrderWithDetails
                               {
@@ -164,24 +176,228 @@ namespace NorthwindTraders.BLL
                                   RequiredDate = data.RequiredDate,
                                   ShippedDate = data.ShippedDate,
                                   Freight = data.Freight,
-                                  Shipper = data.Shipper.CompanyName,
-                                  OrderTotal = data.OrderDetails.Sum(x => x.Quantity * x.UnitPrice),
-                                  Details = from item in data.OrderDetails
-                                            select new CustomerOrderItem
-                                            {
-                                                OrderId = item.OrderID,
-                                                ProductId = item.ProductID,
-                                                ProductName = item.Product.ProductName,
-                                                UnitPrice = item.UnitPrice,
-                                                Quantity = item.Quantity,
-                                                DiscountPercent = item.Discount,
-                                                InStockQuantity = item.Product.UnitsInStock,
-                                                QuantityPerUnit = item.Product.QuantityPerUnit
-                                            }
+                                  Shipper = data.ShipVia.HasValue
+                                          ? data.Shipper.CompanyName
+                                          : null,
+                                  OrderTotal = data.OrderDetails.Sum(x => x.Quantity * x.UnitPrice)
                               }).Single();
+
+                result.Details = (from data in context.Orders
+                                  where data.OrderID == orderId
+                                  from item in data.OrderDetails
+                                 select new CustomerOrderItem
+                                 {
+                                     OrderId = item.OrderID,
+                                     ProductId = item.ProductID,
+                                     ProductName = item.Product.ProductName,
+                                     UnitPrice = item.UnitPrice,
+                                     Quantity = item.Quantity,
+                                     DiscountPercent = item.Discount,
+                                     InStockQuantity = item.Product.UnitsInStock,
+                                     QuantityPerUnit = item.Product.QuantityPerUnit
+                                 }).ToList();
+
                 return result;
             }
         }
+        #endregion
+
+        #region Command Responsibility
+        public void Save(EditCustomerOrder order)
+        {
+            // Always ensure you have been given data to work with
+            if (order == null)
+                throw new ArgumentNullException("order", "Cannot save order; order information was not supplied.");
+
+            // Business validation rules
+            if (order.OrderDate.HasValue)
+                throw new Exception($"An order date of {order.OrderDate.Value.ToLongDateString()} has been supplied. The order date should only be supplied when placing orders, not saving them.");
+
+            // Decide whether to add new or update
+            //  NOTE: Notice that no db activity is occuring yet.
+            if (order.OrderId == 0)
+                AddPendingOrder(order);
+            else
+                UpdatePendingOrder(order);
+        }
+
+        /// <summary>
+        /// AddOrder will create a new customer order, processing it as a single transaction.
+        /// </summary>
+        /// <param name="order">The particulars of the order</param>
+        private void AddPendingOrder(EditCustomerOrder order)
+        {
+            using (var context = new NorthwindContext())
+            {
+                var orderInProcess = context.Orders.Add(new Order());
+                // Make the orderInProcess match the customer order as given...
+                // A) The general order information
+                orderInProcess.CustomerID = order.CustomerId;
+                orderInProcess.EmployeeID = order.EmployeeId;
+                orderInProcess.RequiredDate = order.RequiredDate;
+                orderInProcess.ShipVia = order.ShipperId;
+                orderInProcess.Freight = order.FreightCharge;
+                // B) Add order details
+                foreach (var item in order.OrderItems)
+                {
+                    // Add as a new item
+                    var newItem = new OrderDetail
+                    {
+                        ProductID = item.ProductId,
+                        Quantity = item.OrderQuantity,
+                        UnitPrice = item.UnitPrice,
+                        Discount = item.DiscountPercent
+                    };
+                    orderInProcess.OrderDetails.Add(newItem);
+                }
+
+                // C) Save the changes (one save, one transaction)
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// UpdateExistingOrder will make changes to an existing customer order, processing it as a single transaction.
+        /// </summary>
+        /// <param name="order">The particulars of the order</param>
+        private void UpdatePendingOrder(EditCustomerOrder order)
+        {
+            using (var context = new NorthwindContext())
+            {
+                var orderInProcess = context.Orders.Find(order.OrderId);
+                if (orderInProcess == null)
+                    throw new Exception("The order could not be found");
+                // Make the orderInProcess match the customer order as given...
+                // A) The general order information
+                orderInProcess.CustomerID = order.CustomerId;
+                orderInProcess.EmployeeID = order.EmployeeId;
+                orderInProcess.RequiredDate = order.RequiredDate;
+                orderInProcess.ShipVia = order.ShipperId;
+                orderInProcess.Freight = order.FreightCharge;
+
+                // B) Add/Update/Delete order details
+                //    Loop through the items as known in the database (to update/remove)
+                foreach (var detail in orderInProcess.OrderDetails)
+                {
+                    var changes = order.OrderItems.SingleOrDefault(x => x.ProductId == detail.ProductID);
+                    if (changes == null)
+                        //toRemove.Add(detail);
+                        context.Entry(detail).State = EntityState.Deleted; // flag for deletion
+                    else
+                    {
+                        detail.Discount = changes.DiscountPercent;
+                        detail.Quantity = changes.OrderQuantity;
+                        detail.UnitPrice = changes.UnitPrice;
+                        context.Entry(detail).State = EntityState.Modified;
+                    }
+                }
+                //    Loop through the new items to add to the database
+                foreach (var item in order.OrderItems)
+                {
+                    bool notPresent = !orderInProcess.OrderDetails.Any(x => x.ProductID == item.ProductId);
+                    if (notPresent)
+                    {
+                        // Add as a new item
+                        var newItem = new OrderDetail
+                        {
+                            ProductID = item.ProductId,
+                            Quantity = item.OrderQuantity,
+                            UnitPrice = item.UnitPrice,
+                            Discount = item.DiscountPercent
+                        };
+                        orderInProcess.OrderDetails.Add(newItem);
+                    }
+                }
+
+                // C) Save the changes (one save, one transaction)
+                context.Entry(orderInProcess).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
+
+        public void PlaceOrder(EditCustomerOrder order)
+        {
+            // Always ensure you have been given data to work with
+            if (order == null)
+                throw new ArgumentNullException("order", "Cannot place order; order information was not supplied.");
+
+            // Business validation rules
+            if (!order.RequiredDate.HasValue)
+                throw new Exception($"A  required date for the order is required when placing orders.");
+            if (!order.ShipperId.HasValue)
+                throw new Exception("A shipper must be identified before placing an order.");
+            if (order.OrderItems.Count() == 0)
+                throw new Exception("An order must have at least one item before it can be placed.");
+
+            // Begin processing the order
+            order.OrderDate = DateTime.Today;
+            using (var context = new NorthwindContext())
+            {
+                // Prep for processing...
+                var customer = context.Customers.Find(order.CustomerId);
+                if (customer == null)
+                    throw new Exception("Customer does not exist");
+                var orderInProcess = context.Orders.Find(order.OrderId);
+                if (orderInProcess == null)
+                    orderInProcess = context.Orders.Add(new Order());
+                else
+                {
+                    if (orderInProcess.OrderDate.HasValue)
+                        throw new Exception("Aborting changes: The order has previously been placed.");
+                    context.Entry(orderInProcess).State = EntityState.Modified;
+                }
+                // Make the orderInProcess match the customer order as given...
+                // A) The general order information
+                orderInProcess.CustomerID = order.CustomerId;
+                orderInProcess.EmployeeID = order.EmployeeId;
+                orderInProcess.OrderDate = order.OrderDate;
+                orderInProcess.RequiredDate = order.RequiredDate;
+                orderInProcess.ShipVia = order.ShipperId;
+                orderInProcess.Freight = order.FreightCharge;
+                // B) Default the ship-to info to the customer's info
+                orderInProcess.ShipName = customer.CompanyName;
+                orderInProcess.ShipAddress = customer.Address;
+                orderInProcess.ShipCity = customer.City;
+                orderInProcess.ShipRegion = customer.Region;
+                orderInProcess.ShipPostalCode = customer.PostalCode;
+
+                // C) Add/Remove/Update order details
+                //var toRemove = new List<OrderDetail>();
+                foreach (var detail in orderInProcess.OrderDetails)
+                {
+                    var changes = order.OrderItems.SingleOrDefault(x => x.ProductId == detail.ProductID);
+                    if (changes == null)
+                        //toRemove.Add(detail);
+                        context.Entry(detail).State = EntityState.Deleted; // flag for deletion
+                    else
+                    {
+                        detail.Discount = changes.DiscountPercent;
+                        detail.Quantity = changes.OrderQuantity;
+                        detail.UnitPrice = changes.UnitPrice;
+                        context.Entry(detail).State = EntityState.Modified;
+                    }
+                }
+                foreach (var item in order.OrderItems)
+                {
+                    if (!orderInProcess.OrderDetails.Any(x => x.ProductID == item.ProductId))
+                    {
+                        // Add as a new item
+                        var newItem = new OrderDetail
+                        {
+                            ProductID = item.ProductId,
+                            Quantity = item.OrderQuantity,
+                            UnitPrice = item.UnitPrice,
+                            Discount = item.DiscountPercent
+                        };
+                        orderInProcess.OrderDetails.Add(newItem);
+                    }
+                }
+
+                // D) Save the changes (one save, one transaction)
+                context.SaveChanges();
+            }
+        }
+        #endregion
         #endregion
 
         #region Reporting

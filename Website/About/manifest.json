@@ -9,10 +9,10 @@
       "output": {
         ".html": {
           "relative_path": "api/index.html",
-          "hash": "4vuHk9YYWQtdtH6N6t0udA=="
+          "hash": "kvG7r0JzyXltkq/d3cOTKQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -29,11 +29,195 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/customerOrders-EditForm-Command.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/customerOrders-EditForm-Command.html",
+          "hash": "X+NiIUs/qVeOMCq5IOQivg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/customerOrders-EditForm-Query.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/customerOrders-EditForm-Query.html",
+          "hash": "YF5zU+SnRj6erdQ5srfVlg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/customerOrders-EditForm-State.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/customerOrders-EditForm-State.html",
+          "hash": "7gXOKOyirsx9ilEIMa4ymQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/customerOrders-EditForm.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/customerOrders-EditForm.html",
+          "hash": "fQ4dXxERRESpv/Jlqpc/rQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/customerOrders-Place.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/customerOrders-Place.html",
+          "hash": "/ppkKM473OK33t0pNxvR9w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/customerOrders-SalesPage.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/customerOrders-SalesPage.html",
+          "hash": "IWA3esbyP/pSmNHkKIfG4w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/customerOrders-Save.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/customerOrders-Save.html",
+          "hash": "tDj95XD7xML1vctnasmnkg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/customerOrders-SelectedCustomer.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/customerOrders-SelectedCustomer.html",
+          "hash": "JgN5aMEvgN6GDykLlZvgyQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/customerOrders.md",
       "output": {
         ".html": {
           "relative_path": "articles/customerOrders.html",
-          "hash": "CRd/ksq3hiidD34WdHaliA=="
+          "hash": "l5UU/T2g2oDSqsKG+B8oSw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "articles/images/Command-Save-Order.png",
+      "output": {
+        "resource": {
+          "relative_path": "articles/images/Command-Save-Order.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "articles/images/Edit Order.png",
+      "output": {
+        "resource": {
+          "relative_path": "articles/images/Edit Order.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "articles/images/First Visit.png",
+      "output": {
+        "resource": {
+          "relative_path": "articles/images/First Visit.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "articles/images/Form-State-Edit-Order.png",
+      "output": {
+        "resource": {
+          "relative_path": "articles/images/Form-State-Edit-Order.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "articles/images/Query-First-Visit.png",
+      "output": {
+        "resource": {
+          "relative_path": "articles/images/Query-First-Visit.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "articles/images/Query-Open-Order.png",
+      "output": {
+        "resource": {
+          "relative_path": "articles/images/Query-Open-Order.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "articles/images/Query-Selected-Company.png",
+      "output": {
+        "resource": {
+          "relative_path": "articles/images/Query-Selected-Company.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "articles/images/Selected Company.png",
+      "output": {
+        "resource": {
+          "relative_path": "articles/images/Selected Company.png"
         }
       },
       "is_incremental": false,
@@ -45,7 +229,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/intro.html",
-          "hash": "mQpSFBRcrWYkp/bpmtqMNg=="
+          "hash": "C83iTZbeZ/3qG0t1ZeQXfg=="
         }
       },
       "is_incremental": false,
@@ -53,11 +237,33 @@
     },
     {
       "type": "Toc",
-      "source_relative_path": "articles/toc.yml",
+      "source_relative_path": "articles/toc.md",
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
-          "hash": "Ie7U7AEwtmVA5uTWexm5wA=="
+          "hash": "oHiwzSiG47Ycg8AY0zmCbg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/NorthwindLogoLarge.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/NorthwindLogoLarge.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/NorthwindMenuLogoSmall.gif",
+      "output": {
+        "resource": {
+          "relative_path": "images/NorthwindMenuLogoSmall.gif"
         }
       },
       "is_incremental": false,
@@ -69,10 +275,10 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "VBgm7KTajoZHx42O9+5PYQ=="
+          "hash": "u06pKBbRTCYkcVlAMT+spA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -91,7 +297,8 @@
   "incremental_info": [
     {
       "status": {
-        "can_incremental": true,
+        "can_incremental": false,
+        "details": "Cannot build incrementally because config changed.",
         "incrementalPhase": "build"
       },
       "processors": {
@@ -100,8 +307,13 @@
           "details": "Processor TocDocumentProcessor cannot suppport incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build"
         },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot suppport incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build"
+        },
         "ConceptualDocumentProcessor": {
-          "can_incremental": true,
+          "can_incremental": false,
           "incrementalPhase": "build"
         }
       }

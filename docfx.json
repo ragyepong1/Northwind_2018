@@ -4,13 +4,24 @@
       "src": [
         {
           "files": [
-            "src/**.csproj"
+            "**/*.csproj"
           ],
           "exclude": [
             "**/obj/**",
             "**/bin/**",
-            "Website\\About/**"
+            "Website/About/**"
           ]
+        },
+        {
+          "files": [
+            "NorthwindTraders.Security/NorthwindTraders.Security.csproj"
+          ],
+          "exclude": [
+            "**/obj/**",
+            "**/bin/**",
+            "Website/About/**"
+          ],
+          "cwd": "."
         }
       ],
       "dest": "api"
@@ -20,7 +31,7 @@
     "content": [
       {
         "files": [
-          "api/**.yml",
+          "api/toc.yml",
           "api/index.md"
         ]
       },
@@ -33,33 +44,40 @@
         ],
         "exclude": [
           "obj/**",
-          "Website\\About/**"
+          "Website/About/**"
         ]
       }
     ],
     "resource": [
       {
         "files": [
+          "articles/images/**",
           "images/**"
         ],
         "exclude": [
           "obj/**",
-          "Website\\About/**"
+          "Website/About/**"
         ]
       }
     ],
     "overwrite": [
       {
         "files": [
-          "apidoc/**.md"
+          "api/**.md"
         ],
         "exclude": [
+          "api/index.md",
           "obj/**",
-          "Website\\About/**"
+          "Website/About/**"
         ]
       }
     ],
-    "dest": "Website\\About",
+    "dest": "Website/About",
+    "globalMetadata" : {
+      "_enableSearch": "true",
+      "_appFooter": "&copy; 2017 - DMIT",
+      "_disableContribution": "true"
+    },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
